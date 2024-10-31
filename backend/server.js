@@ -8,7 +8,7 @@ dotenv.config();   // accessing mongo_uri to my terminal
 const app = express();
 
 // its a middleware, function that runs before you send a res back to the client
-app.use(express.json)    // allows us to accept JSON data in the req.body
+app.use(express.json())    // allows us to accept JSON data in the req.body
 
 app.post("/api/products", async (req, res) => {
     // res.send("server is ready");
