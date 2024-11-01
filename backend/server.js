@@ -2,6 +2,7 @@ import express from 'express';  // need to set type from package,json to module
 import dotenv from "dotenv"   // so that we will be able to use our mongo_uri db
 import { connectDB } from './config/db.js';
 import Product from './models/product.model.js';
+import mongoose from 'mongoose';
 
 dotenv.config();   // accessing mongo_uri to my terminal
 
@@ -18,7 +19,7 @@ app.get("/api/products", async (req, res) => {
         console.log("error in fetching products:", error.message)        ;
         res.status(500).json({success: false, message: "Server Error"});
     }
-})
+});
 
 app.post("/api/products", async (req, res) => {
     // res.send("server is ready");
@@ -38,6 +39,23 @@ app.post("/api/products", async (req, res) => {
     }
 });
 // console.log(process.env.MONGO_URI);    // accessing mongo_uri to my terminal
+
+app.put("/api/products/:id", async (req, res) => {
+    const { id } = req.params;
+    const product = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({success:false, message: "Invalid Product"});
+    }
+
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(id, product, {new:true});
+        res.status(200).json({success:true, data: updatedProduct});
+    } catch (error) {
+        res.status(500).json({success:false, message: "Server Error"});
+        
+    }
+});
 
 app.delete("/api/products/:id", async (req, res) => {
     const {id} = req.params;
