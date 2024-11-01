@@ -1,7 +1,9 @@
 import express from 'express';  // need to set type from package,json to module
-import dotenv from "dotenv"   // so that we will be able to use our mongo_uri db
+import dotenv from "dotenv";   // so that we will be able to use our mongo_uri db
 import { connectDB } from './config/db.js';
-import productRoutes from ".routes/product.route.js"
+
+import productRoutes from "./routes/product.route.js";
+
 dotenv.config();   // accessing mongo_uri to my terminal
 
 const app = express();
