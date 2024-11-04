@@ -7,13 +7,14 @@ import productRoutes from "./routes/product.route.js";
 dotenv.config();   // accessing mongo_uri to my terminal
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // its a middleware, function that runs before you send a res back to the client
 app.use(express.json())    // allows us to accept JSON data in the req.body
 
 app.use("/api/products",productRoutes)
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     connectDB();
-    console.log("Server has started at http://localhost:5000");
+    console.log("Server has started at http://localhost:"+ PORT);
 });
